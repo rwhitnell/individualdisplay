@@ -8,9 +8,11 @@ import javafx.scene.layout.GridPane;
 
 import java.io.File;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
-public class IndividualPane extends GridPane {
+public class IndividualPane extends GridPane implements EventHandler <ActionEvent> {
     private TextField firstNameField;
     private TextField lastNameField;
     private TextField emailField;
@@ -62,6 +64,7 @@ public class IndividualPane extends GridPane {
             // create an individual object
             Individual individual = new Individual(firstName, lastName, email, image);
 
+            System.out.println(this.getClass().getResource("primary.fxml").getFile());
             File avatarFile = new File(this.getClass().getResource(individual.getAvatarImage()).getFile());
             avatar = new ImageView(avatarFile.toURI().toString());
             avatar.setPreserveRatio(true);
@@ -73,6 +76,24 @@ public class IndividualPane extends GridPane {
             // set the text of the label to the formatted name
             formattedNameLabel.setText(individual.toString());
         });
+
+        submitButton.setOnAction(this::handle);
+
+        submitButton.setOnAction(new ButtonHandler());
+
+        submitButton.setOnAction(this);
+    }
+
+    @Override
+    public void handle(ActionEvent e) {
+        System.out.println(e);
+    }
+
+    private class ButtonHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent e) {
+            System.out.println(e);
+        }
     }
 
 }
